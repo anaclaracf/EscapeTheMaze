@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager
 {
     private static GameManager _instance;
-    public enum GameState { MENU, GAME, PAUSE, ENDGAME };
+    public enum GameState { MENU, STORY, GAME, PAUSE, ENDGAME };
 
     public GameState gameState { get; private set; }
     public int minute;
@@ -27,7 +27,7 @@ public class GameManager
      
         minute = 5;
         seconds = 0;
-        gameState = GameState.GAME;
+        gameState = GameState.MENU;
     }
 
     private void Reset()
