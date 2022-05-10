@@ -29,4 +29,19 @@ public class States : MonoBehaviour
         gm.ChangeState(GameManager.GameState.GAME);
         
     }
+    public void Sair()
+    {
+        
+
+        gm.ChangeState(GameManager.GameState.MENU);
+        
+    }
+
+    public void Voltar()
+    {
+        
+
+        gm.ChangeState(GameManager.GameState.GAME);
+        
+    }
 }
