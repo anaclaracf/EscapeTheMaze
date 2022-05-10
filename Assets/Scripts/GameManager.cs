@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager
 {
@@ -12,6 +13,11 @@ public class GameManager
     public float seconds;
     public delegate void ChangeStateDelegate();
     public static ChangeStateDelegate changeStateDelegate;
+    private GameObject [] canvas;
+
+    void Start(){
+        canvas = GameObject.FindGameObjectsWithTag("canvas");
+    }
 
     public static GameManager GetInstance()
     {
@@ -33,7 +39,7 @@ public class GameManager
     private void Reset()
     {
        
-        minute = 2;
+        minute = 5;
         seconds = 0;
     }
 
@@ -41,6 +47,16 @@ public class GameManager
     {
         if ((gameState == GameState.ENDGAME || gameState == GameState.MENU) && nextState == GameState.GAME)
             Reset();
+
+        // if (gameState == GameState.PAUSE && nextState == GameState.MENU){
+
+        //     Reset();
+        //     // foreach (GameObject canva in canvas){
+        //     // }
+        //     DontDestroyOnLoad(canvas);
+        //     SceneManager.LoadScene("Main");
+        // }
+
         gameState = nextState;
         changeStateDelegate();
     }

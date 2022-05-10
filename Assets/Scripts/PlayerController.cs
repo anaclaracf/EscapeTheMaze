@@ -9,10 +9,13 @@ public class PlayerController : MonoBehaviour
    CharacterController characterController;
    //Referência usada para a câmera filha do jogador
    GameObject playerCamera;
+
    //Utilizada para poder travar a rotação no angulo que quisermos.
    float cameraRotation;
 
    GameManager gm;
+
+   private Animator animator;
    
    void Start()
    {
@@ -21,15 +24,22 @@ public class PlayerController : MonoBehaviour
        cameraRotation = 0.0f;
 
        gm = GameManager.GetInstance();
+
+       animator = GetComponent<Animator>();
    }
 
    void Update()
    {
 
+       HandleAnimation();
+
        if(gm.gameState == GameManager.GameState.GAME){
 
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
+
+        // print(x);
+        // print(z);
 
             //Tratando movimentação do mouse
         float mouse_dX = Input.GetAxis("Mouse X");
@@ -51,7 +61,25 @@ public class PlayerController : MonoBehaviour
         
         playerCamera.transform.localRotation = Quaternion.Euler(cameraRotation, 0.0f, 0.0f);
        }
+
+       if(Input.GetKeyDown(KeyCode.Escape) && gm.gameState==GameManager.GameState.GAME){
+           gm.ChangeState(GameManager.GameState.PAUSE);
+       }
        
    }
+
+
+   private void HandleAnimation(){
+
+       print(characterController.velocity.x);
+       print(characterController.velocity.z);
+   
+        if((characterController.velocity.x != 0) || (characterController.velocity.z != 0)){
+            animator.SetBool("walking", true);
+        }else{
+            animator.SetBool("walking", false);
+        }
+    }
+   
 
 }
