@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour
             message.text="You finally escaped the Asylum! Enjoy your freedom...";
 
         }else{
-            message.text="Unfortunately the crew has caught you, maybe next time...";
+            message.text="Unfortunately the crew caught you, maybe next time...";
 
         }
         gm.ChangeState(GameManager.GameState.ENDGAME);
