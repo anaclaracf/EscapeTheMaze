@@ -11,13 +11,12 @@ public class GameManager
     public GameState gameState { get; private set; }
     public int minute;
     public float seconds;
+    public  GameState nS;
     public delegate void ChangeStateDelegate();
     public static ChangeStateDelegate changeStateDelegate;
-    private GameObject [] canvas;
 
-    void Start(){
-        canvas = GameObject.FindGameObjectsWithTag("canvas");
-    }
+
+    
 
     public static GameManager GetInstance()
     {
@@ -31,7 +30,7 @@ public class GameManager
     private GameManager()
     {
      
-        minute = 5;
+        minute = 1;
         seconds = 0;
         gameState = GameState.MENU;
     }
@@ -45,17 +44,16 @@ public class GameManager
 
     public void ChangeState(GameState nextState)
     {
-        if ((gameState == GameState.ENDGAME || gameState == GameState.MENU) && nextState == GameState.GAME)
+
+        nS= nextState;
+     
+        if ((gameState == GameState.ENDGAME || gameState == GameState.MENU) && nextState == GameState.GAME){
             Reset();
+        }
 
-        // if (gameState == GameState.PAUSE && nextState == GameState.MENU){
-
-        //     Reset();
-        //     // foreach (GameObject canva in canvas){
-        //     // }
-        //     DontDestroyOnLoad(canvas);
-        //     SceneManager.LoadScene("Main");
-        // }
+        if (gameState == GameState.PAUSE && nextState == GameState.MENU){
+            Reset();
+        }
 
         gameState = nextState;
         changeStateDelegate();

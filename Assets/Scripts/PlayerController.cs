@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,22 +15,32 @@ public class PlayerController : MonoBehaviour
    float cameraRotation;
 
    GameManager gm;
+   private GameObject [] canvas;
+
 
    private Animator animator;
+   Vector3 originalPos;
+   public Text message;
+
    
    void Start()
    {
        characterController = GetComponent<CharacterController>();
        playerCamera = GameObject.Find("Main Camera");
+    //    plano = GameObject.FindGameObjectWithTag("end");
        cameraRotation = 0.0f;
 
        gm = GameManager.GetInstance();
 
        animator = GetComponent<Animator>();
+       canvas = GameObject.FindGameObjectsWithTag("canvas");
+
+       originalPos=this.transform.position;
    }
 
    void Update()
    {
+       Perdeu();
 
        HandleAnimation();
 
@@ -68,17 +79,48 @@ public class PlayerController : MonoBehaviour
        
    }
 
+    private void Reset()
+    {
+       
+        gm.minute = 5;
+        gm.seconds = 0;
+    }
+
+    private void Perdeu(){
+
+       if ((gm.gameState == GameManager.GameState.ENDGAME || gm.gameState == GameManager.GameState.MENU) && gm.nS == GameManager.GameState.GAME){
+            this.transform.position= originalPos;
+            Reset();
+        }
+
+        if ( gm.nS == GameManager.GameState.MENU){
+            this.transform.position= originalPos;
+            Reset();
+        }
+   }
 
    private void HandleAnimation(){
 
-       print(characterController.velocity.x);
-       print(characterController.velocity.z);
-   
         if((characterController.velocity.x != 0) || (characterController.velocity.z != 0)){
             animator.SetBool("walking", true);
         }else{
             animator.SetBool("walking", false);
         }
+    }
+
+
+     void OnTriggerEnter(Collider collision)
+    {
+
+        print(collision.gameObject.tag=="end");
+        if(collision.gameObject.tag=="end" && (gm.minute>=0 || gm.seconds>0)){
+            message.text="You finally escaped the Asylum! Enjoy your freedom...";
+
+        }else{
+            message.text="Unfortunately the crew has caught you, maybe next time...";
+
+        }
+        gm.ChangeState(GameManager.GameState.ENDGAME);
     }
    
 
