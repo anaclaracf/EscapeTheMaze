@@ -21,7 +21,9 @@ public class PlayerController : MonoBehaviour
    private Animator animator;
    Vector3 originalPos;
    public Text message;
+   public AudioClip footstep;
 
+   public AudioSource som_walking;
    
    void Start()
    {
@@ -82,7 +84,7 @@ public class PlayerController : MonoBehaviour
     private void Reset()
     {
        
-        gm.minute = 5;
+        gm.minute = 4;
         gm.seconds = 0;
     }
 
@@ -103,8 +105,14 @@ public class PlayerController : MonoBehaviour
 
         if((characterController.velocity.x != 0) || (characterController.velocity.z != 0)){
             animator.SetBool("walking", true);
+            if(!som_walking.isPlaying)
+                som_walking.PlayOneShot(footstep, 0.2f);
         }else{
             animator.SetBool("walking", false);
+            som_walking.Pause();
+
+            
+
         }
     }
 

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - canvas
   - end
+  - Door
+  - Picture
   layers:
   - Default
   - TransparentFX

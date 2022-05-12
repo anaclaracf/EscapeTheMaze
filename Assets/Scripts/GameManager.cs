@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager
 {
     private static GameManager _instance;
-    public enum GameState { MENU, STORY, GAME, PAUSE, ENDGAME };
+    public enum GameState { MENU, STORY, GAME, PAUSE, ENDGAME, TUTORIAL };
 
     public GameState gameState { get; private set; }
     public int minute;
@@ -30,7 +30,7 @@ public class GameManager
     private GameManager()
     {
      
-        minute = 1;
+        minute = 4;
         seconds = 0;
         gameState = GameState.MENU;
     }
@@ -38,7 +38,7 @@ public class GameManager
     private void Reset()
     {
        
-        minute = 5;
+        minute =4;
         seconds = 0;
     }
 

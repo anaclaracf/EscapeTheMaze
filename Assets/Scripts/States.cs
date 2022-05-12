@@ -44,6 +44,13 @@ public class States : MonoBehaviour
         gm.ChangeState(GameManager.GameState.GAME);
         
     }
+    public void Tutorial()
+    {
+        
+
+        gm.ChangeState(GameManager.GameState.TUTORIAL);
+        
+    }
 
 
 
